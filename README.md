@@ -1,94 +1,58 @@
-# Weather Prediction Project
+# Weather Rainfall Prediction and Modeling
 
-This project focuses on predicting weather conditions using various machine learning models. The goal is to analyze historical weather data, perform feature engineering, and evaluate different classification algorithms to find the best performing model for predicting daily weather summaries.
+This repository contains code for analyzing weather data and building regression models to predict rainfall. The project explores various regression algorithms, including Linear Regression, Decision Tree Regressor, Random Forest Regressor, and K-Nearest Neighbors Regressor, and uses PyCaret for automated machine learning.
 
-## Project Structure
+## Project Overview
 
-The project is implemented as a Google Colab notebook, containing the following key sections:
+The goal of this project is to predict rainfall based on historical weather data. The notebook covers the following steps:
 
-1.  **Setup and Data Loading:**
-    *   Installation of necessary libraries (pycaret, numpy, pandas, seaborn, matplotlib).
-    *   Mounting Google Drive to access the dataset.
-    *   Loading and initial exploration of the `weatherHistory.csv` dataset.
-
-2.  **Data Cleaning and Preprocessing:**
-    *   Handling missing values (dropping rows with nulls).
-    *   Removing duplicate rows.
-    *   Analyzing the distribution of categorical features (`Summary`).
-
-3.  **Exploratory Data Analysis (EDA):**
-    *   Visualizing the distribution of numerical features using histograms and box plots.
-    *   Analyzing correlations between numerical features using a heatmap.
-    *   Creating scatter plots to understand relationships between key features (e.g., Temperature vs Apparent Temperature).
-    *   Visualizing trends over time (Temperature).
-    *   Analyzing the relationship between categorical features and numerical features (Average Temperature by Summary).
-    *   Generating pair plots for a subset of numerical features.
-    *   Visualizing the distribution of 'Precip Type' (if suitable).
-
-4.  **Feature Engineering:**
-    *   Extracting time-based features from the 'Formatted Date' column (Year, DayOfWeek, Is\_Weekend, Hour, Month).
-    *   Applying sinusoidal transformations to cyclical features (Hour, Month).
-    *   Creating a 'Humidity\_Level' categorical feature.
-    *   Generating interaction features between different weather parameters.
-    *   Dropping the original 'Formatted Date' column.
-
-5.  **Outlier Handling:**
-    *   Visualizing outliers in numerical features using box plots.
-    *   Implementing a function to remove outliers using the Interquartile Range (IQR) method.
-    *   Applying the outlier removal function to numerical columns.
-
-6.  **Encoding Categorical Features:**
-    *   Handling missing values in 'Precip Type'.
-    *   Encoding categorical features ('Summary', 'Precip Type', 'Daily Summary') using Label Encoding.
-    *   Dropping the original categorical columns.
-
-7.  **Model Training and Evaluation (Manual Approach):**
-    *   Splitting the data into training and testing sets.
-    *   Scaling numerical features using StandardScaler.
-    *   Defining an `evaluate_model` function to calculate and print various classification metrics (Accuracy, Recall, Precision, F1 Score, Classification Report).
-    *   Training and evaluating several classification models using pipelines:
-        *   Logistic Regression
-        *   Decision Tree Classifier
-        *   K-Neighbors Classifier
-        *   Random Forest Classifier
-        *   Support Vector Classifier (SVC)
-        *   Gaussian Naive Bayes
-    *   Storing and visualizing the performance metrics of these models.
-
-8.  **Model Training and Evaluation (PyCaret):**
-    *   Checking and handling classes with only one sample in the target variable, as required by PyCaret.
-    *   Setting up the PyCaret environment for classification.
-    *   Comparing multiple classification models using `compare_models()`.
-    *   Evaluating the best performing model identified by PyCaret.
+1.  **Data Loading and Exploration:** Loading the weather dataset, examining its structure, and performing initial descriptive analysis.
+2.  **Feature Engineering:** Creating new features from the 'Date' column to capture temporal patterns (Month, Quarter, Days Since, cyclical month features).
+3.  **Data Visualization:** Visualizing the data distribution, correlations, and potential outliers.
+4.  **Outlier Detection and Handling:** Identifying and optionally removing outliers using the Interquartile Range (IQR) method.
+5.  **Polynomial Feature Creation:** Transforming features using polynomial features to capture non-linear relationships.
+6.  **Model Training and Evaluation (Manual):** Training and evaluating several regression models (Linear Regression, Decision Tree Regressor, Random Forest Regressor, KNeighbors Regressor) using standard scikit-learn pipelines and metrics.
+7.  **Hyperparameter Tuning:** Tuning the hyperparameters of the Decision Tree, Random Forest, and K-Nearest Neighbors models using GridSearchCV.
+8.  **Model Comparison:** Comparing the performance of the models before and after tuning.
+9.  **Automated ML with PyCaret:** Utilizing the PyCaret library to quickly setup the regression environment, compare various models automatically, and evaluate the best performing model.
 
 ## Dataset
 
-The dataset used in this project is `weatherHistory.csv`. It contains historical weather data with various attributes such as temperature, humidity, wind speed, pressure, and a daily summary.
+The dataset used in this project is `weather.csv`. It is expected to be located in the `/content/drive/MyDrive/dataset/` path if you are running this notebook in Google Colab and have your Google Drive mounted.
+
+*Please ensure you have the `weather.csv` file in the specified location or update the file path in the notebook.*
 
 ## Dependencies
 
 The following libraries are required to run the notebook:
 
-*   `pycaret` (with full, mlops, and time\_series extras)
 *   `numpy`
 *   `pandas`
 *   `seaborn`
 *   `matplotlib`
-*   `scikit-learn`
-*   `scipy`
-*   `IPython`
+*   `sklearn`
+*   `pycaret[full]`
+*   `pycaret[mlops]`
+*   `pycaret[time-series]`
 
-You can install these using `pip` as shown in the notebook.
+You can install the required libraries using pip:
+Alternatively, the notebook includes `!pip install` commands to install them within the Colab environment.
 
-## How to Run
+## How to Run the Code
 
-1.  Open the Google Colab notebook.
-2.  Ensure you have the `weatherHistory.csv` dataset available in your Google Drive. Update the path in the notebook if necessary.
-3.  Run each code cell sequentially.
+1.  **Clone the repository:**
+2.  2.  **Open the notebook:** Open the `weather_rainfall_prediction.ipynb` (or whatever you name your notebook file) in Google Colab or a Jupyter environment.
+3.  **Mount Google Drive (if using Colab):** The notebook includes code to mount your Google Drive to access the dataset.
+4.  **Run the cells:** Execute the cells in the notebook sequentially.
+
+## Results
+
+The notebook provides performance metrics (MSE, RMSE, MAE, R2) for the different models. It also includes visualizations of residuals and actual vs. predicted values to help assess model performance. The PyCaret section will provide an automated comparison of many different regression models.
 
 ## Future Work
 
-*   Hyperparameter tuning for the top performing models identified by PyCaret.
-*   Exploring other feature engineering techniques.
-*   Investigating different data balancing techniques if class imbalance is a significant issue.
-*   Deploying the best performing model.
+*   Explore other feature engineering techniques.
+*   Investigate different outlier handling strategies.
+*   Experiment with more advanced regression models.
+*   Implement time series forecasting techniques.
+*   Deploy the trained model for making predictions.
